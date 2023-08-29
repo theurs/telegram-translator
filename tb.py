@@ -132,8 +132,8 @@ def set_default_commands(message: telebot.types.Message) -> None:
 
     # most used languages
     languages = ['ar', 'bn', 'da', 'de', 'el', 'es', 'fa', 'fi', 'fr', 'hi', 'hu', 'id', 'in', 'it',
-                 'ja', 'ko', 'nl', 'no', 'pl', 'pt', 'pt-BR', 'ro', 'ru', 'sv', 'sw', 'th', 'th-TH',
-                 'tr', 'uk', 'ur', 'vi', 'zh']
+                 'ja', 'ko', 'nl', 'no', 'pl', 'pt', 'ro', 'ru', 'sv', 'sw', 'th', 'tr', 'uk', 'ur',
+                 'vi', 'zh']
 
     try:
         if not bot.set_my_name(bot_name):
