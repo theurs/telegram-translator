@@ -102,33 +102,6 @@ def connect_to_user(message: telebot.types.Message) -> None:
         bot.reply_to(message, help, parse_mode='HTML')
 
 
-@bot.message_handler(func=lambda message: True)
-def echo_all(message: telebot.types.Message) -> None:
-    """Text message handler"""
-    thread = threading.Thread(target=do_task, args=(message,))
-    thread.start()
-def do_task(message):
-    """Text message handler threaded"""
-    user_id = message.from_user.id
-    if user_id in CONNECTS:
-        to_user_id = CONNECTS[user_id]
-        if to_user_id in DB:
-            lang = DB[to_user_id]
-        else:
-            bot.reply_to(message, 'I dont know who is it. This person have to say /start to me.')
-            return
-    else:
-        bot.reply_to(message, 'Not connected, use /connect command first')
-        return
-
-    translated = my_trans.translate(message.text, lang)
-
-    bot.send_message(to_user_id, translated, disable_notification=True)
-
-    my_log.log_echo(message)
-    my_log.log_echo(message, translated)
-
-
 @bot.message_handler(commands=['init'])
 def set_default_commands():
     """
@@ -191,6 +164,33 @@ def set_default_commands():
                 my_log.log2(f'Failed to set bot description: {new_short_description}')
         except Exception as error:
             my_log.log2(f'Failed to set bot description: [{i}] {new_short_description}')
+
+
+@bot.message_handler(func=lambda message: True)
+def echo_all(message: telebot.types.Message) -> None:
+    """Text message handler"""
+    thread = threading.Thread(target=do_task, args=(message,))
+    thread.start()
+def do_task(message):
+    """Text message handler threaded"""
+    user_id = message.from_user.id
+    if user_id in CONNECTS:
+        to_user_id = CONNECTS[user_id]
+        if to_user_id in DB:
+            lang = DB[to_user_id]
+        else:
+            bot.reply_to(message, 'I dont know who is it. This person have to say /start to me.')
+            return
+    else:
+        bot.reply_to(message, 'Not connected, use /connect command first')
+        return
+
+    translated = my_trans.translate(message.text, lang)
+
+    bot.send_message(to_user_id, translated, disable_notification=True)
+
+    my_log.log_echo(message)
+    my_log.log_echo(message, translated)
 
 
 def main():
