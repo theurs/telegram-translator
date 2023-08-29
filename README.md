@@ -51,3 +51,9 @@ token   = "xxx"
 ``````
 
 start ./tb.py
+
+
+# Commands for admins
+/restart to restart bot
+/init to set commands and descriptions in many languages (auto translated)
+
