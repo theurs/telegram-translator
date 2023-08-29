@@ -1,0 +1,4 @@
+/start - Hello and get ID
+/language - set my language, default - autodetect
+/connect - start chatting wit user identified by ID
+/id - show my ID

@@ -1,0 +1,15 @@
+[Unit]
+Description=Telegram Bot translator Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/tb-tr
+ExecStart=/home/ubuntu/.tb-tr/bin/python3 /home/ubuntu/tb-tr/tb.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
