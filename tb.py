@@ -129,10 +129,11 @@ def do_task(message):
     my_log.log_echo(message, translated)
 
 
+@bot.message_handler(commands=['init'])
 def set_default_commands():
     """
     Reads a file containing a list of commands and their descriptions,
-    and sets the default commands for the bot.
+    and sets the default commands and descriptions for the bot.
     """
     commands = []
     with open('commands.txt', encoding='utf-8') as file:
@@ -149,26 +150,54 @@ def set_default_commands():
     description = bot.get_my_description().description.strip()
     short_description = str(bot.get_my_short_description().short_description).strip()
 
-    new_bot_name = cfg.bot_name.strip()
     new_description = cfg.bot_description.strip()
     new_short_description = cfg.bot_short_description.strip()
 
-    if bot_name != new_bot_name:
-        if not bot.set_my_name(cfg.bot_name):
-            my_log.log2(f'Failed to set bot name: {cfg.bot_name}')
-    if description != new_description:
+    # most used languages
+    languages = ['ar', 'bn', 'da', 'de', 'el', 'es', 'fa', 'fi', 'fr', 'hi', 'hu', 'id', 'in', 'it',
+                 'ja', 'ko', 'nl', 'no', 'pl', 'pt', 'pt-BR', 'ro', 'ru', 'sv', 'sw', 'th', 'th-TH',
+                 'tr', 'uk', 'ur', 'vi', 'zh']
+
+    try:
+        if not bot.set_my_name(bot_name):
+            my_log.log2(f'Failed to set bot name: {bot_name}')
+    except Exception as error_set_bot_name:
+        my_log.log2(f'Failed to set bot name: {error_set_bot_name}')
+
+    try:
         if not bot.set_my_description(cfg.bot_description):
             my_log.log2(f'Failed to set bot description: {cfg.bot_description}')
-    if short_description != new_short_description:
+    except Exception as error_set_description:
+        my_log.log2(f'Failed to set bot description: {error_set_description}')
+
+    for i in languages:
+        translated = my_trans.translate(new_description, i)
+        try:
+            if not bot.set_my_description(translated, language_code=i):
+                my_log.log2(f'Failed to set bot description: {cfg.bot_description}')
+        except Exception as error:
+            my_log.log2(f'Failed to set bot description: [{i}] {new_description}')
+
+    try:
         if not bot.set_my_short_description(cfg.bot_short_description):
-            my_log.log2(f'Failed to set bot short description: {cfg.bot_short_description}')
+            my_log.log2(f'Failed to set bot short description: {cfg.new_description}')
+    except Exception as error_set_short_description:
+        my_log.log2(f'Failed to set bot short description: {error_set_short_description}')
+
+    for i in languages:
+        translated = my_trans.translate(new_short_description, i)
+        try:
+            if not bot.set_my_description(translated, language_code=i):
+                my_log.log2(f'Failed to set bot description: {new_short_description}')
+        except Exception as error:
+            my_log.log2(f'Failed to set bot description: [{i}] {new_short_description}')
 
 
 def main():
     """
     Runs the main function, which sets default commands and starts polling the bot.
     """
-    set_default_commands()
+    # set_default_commands()
     bot.polling(timeout=90, long_polling_timeout=90)
 
 
