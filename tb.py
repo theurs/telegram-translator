@@ -103,7 +103,7 @@ def connect_to_user(message: telebot.types.Message) -> None:
 
 
 @bot.message_handler(commands=['init'])
-def set_default_commands():
+def set_default_commands(message: telebot.types.Message) -> None:
     """
     Reads a file containing a list of commands and their descriptions,
     and sets the default commands and descriptions for the bot.
