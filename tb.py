@@ -151,9 +151,9 @@ def set_default_commands(message: telebot.types.Message) -> None:
         translated = my_trans.translate(new_description, i)
         try:
             if not bot.set_my_description(translated, language_code=i):
-                my_log.log2(f'Failed to set bot description: {cfg.bot_description}')
+                my_log.log2(f'Failed to set bot description: {translated}')
         except Exception as error:
-            my_log.log2(f'Failed to set bot description: [{i}] {new_description}')
+            my_log.log2(f'Failed to set bot description: [{i}] {translated}')
 
     try:
         if not bot.set_my_short_description(cfg.bot_short_description):
@@ -164,10 +164,10 @@ def set_default_commands(message: telebot.types.Message) -> None:
     for i in languages:
         translated = my_trans.translate(new_short_description, i)
         try:
-            if not bot.set_my_description(translated, language_code=i):
-                my_log.log2(f'Failed to set bot description: {new_short_description}')
+            if not bot.set_my_short_description(translated, language_code=i):
+                my_log.log2(f'Failed to set bot short description: {translated}')
         except Exception as error:
-            my_log.log2(f'Failed to set bot description: [{i}] {new_short_description}')
+            my_log.log2(f'Failed to set bot short description: [{i}] {translated}')
 
 
 @bot.message_handler(func=lambda message: True)
