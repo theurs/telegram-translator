@@ -9,7 +9,6 @@ import cfg
 import my_dic
 import my_log
 import my_trans
-import utils
 
 
 # set the working folder = the folder where the script is located
