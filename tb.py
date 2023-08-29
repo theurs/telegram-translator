@@ -108,6 +108,10 @@ def set_default_commands(message: telebot.types.Message) -> None:
     Reads a file containing a list of commands and their descriptions,
     and sets the default commands and descriptions for the bot.
     """
+    if message.from_user.id not in cfg.admins:
+        bot.reply_to(message, 'For admins only.')
+        return
+
     commands = []
     with open('commands.txt', encoding='utf-8') as file:
         for line in file:
