@@ -157,7 +157,7 @@ def set_default_commands(message: telebot.types.Message) -> None:
 
     try:
         if not bot.set_my_short_description(cfg.bot_short_description):
-            my_log.log2(f'Failed to set bot short description: {cfg.new_description}')
+            my_log.log2(f'Failed to set bot short description: {new_description}')
     except Exception as error_set_short_description:
         my_log.log2(f'Failed to set bot short description: {error_set_short_description}')
 
